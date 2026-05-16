@@ -112,8 +112,12 @@ function CaseStudiesHiFi() {
           Discuss a <I color={AC.goldLight}>similar trade</I> structure.
         </Display>
         <div style={{ marginTop: 36, display: 'flex', gap: 12, justifyContent: 'center' }}>
-          <GoldButton>Book a Call →</GoldButton>
-          <GhostButton onDark>Request Dossier</GhostButton>
+          <a href="about.html" style={{ textDecoration: 'none' }}>
+            <GoldButton>Book a Call →</GoldButton>
+          </a>
+          <a href="about.html" style={{ textDecoration: 'none' }}>
+            <GhostButton onDark>Request Dossier</GhostButton>
+          </a>
         </div>
       </div>
 

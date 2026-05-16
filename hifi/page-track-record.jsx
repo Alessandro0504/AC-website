@@ -231,8 +231,12 @@ function TrackRecordHiFi() {
           {t.ctaPre} <I color={AC.goldLight}>{t.ctaItalic}</I> {t.ctaPost}
         </Display>
         <div style={{ marginTop: 36, display: 'flex', gap: 12, justifyContent: 'center' }}>
-          <GoldButton>{t.ctaCta1}</GoldButton>
-          <GhostButton onDark>{t.ctaCta2}</GhostButton>
+          <a href="about.html" style={{ textDecoration: 'none' }}>
+            <GoldButton>{t.ctaCta1}</GoldButton>
+          </a>
+          <a href="about.html" style={{ textDecoration: 'none' }}>
+            <GhostButton onDark>{t.ctaCta2}</GhostButton>
+          </a>
         </div>
       </div>
 

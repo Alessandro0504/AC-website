@@ -249,7 +249,9 @@ function PortfolioHiFi() {
           </Body>
         </div>
         <div style={{ display: 'flex', flexDirection: 'column', gap: 12, flexShrink: 0 }}>
-          <GoldButton>{t.inquiryCta1}</GoldButton>
+          <a href="about.html" style={{ textDecoration: 'none' }}>
+            <GoldButton>{t.inquiryCta1}</GoldButton>
+          </a>
           <GhostButton onDark>{t.inquiryCta2}</GhostButton>
         </div>
       </div>

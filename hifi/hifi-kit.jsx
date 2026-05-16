@@ -239,20 +239,30 @@ function Tag({ children, variant = 'cream', style = {} }) {
 }
 
 /* NavItem — single nav link with hover underline */
+const NAV_HREFS = {
+  'Portfolio': 'portfolio.html',
+  'Track Record': 'track-record.html',
+  'Network': 'network.html',
+  'Case Studies': 'case-studies.html',
+  'About': 'about.html',
+};
 function NavItem({ label, active, fg }) {
   const [hovered, setHovered] = React.useState(false);
   const showUnderline = active || hovered;
   return (
-    <span
+    <a
+      href={NAV_HREFS[label] || '#'}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
       style={{
+        textDecoration: 'none',
+        color: 'inherit',
         opacity: active ? 1 : (hovered ? 1 : 0.75),
         borderBottom: showUnderline ? `1px solid ${fg}` : '1px solid transparent',
         paddingBottom: 4,
         cursor: 'pointer',
         transition: 'opacity 0.15s, border-color 0.15s',
-      }}>{label}</span>
+      }}>{label}</a>
   );
 }
 
@@ -273,7 +283,7 @@ function HiFiNav({ active = 'Home', onDark = false }) {
       position: 'relative',
       zIndex: 10,
     }}>
-      <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+      <a href="index.html" style={{ textDecoration: 'none', display: 'flex', alignItems: 'center', gap: 12 }}>
         <img src="assets/ac-logo.png" alt="AC" style={{
           width: 30, height: 30,
           filter: onDark ? 'brightness(0) invert(1)' : 'none',
@@ -285,7 +295,7 @@ function HiFiNav({ active = 'Home', onDark = false }) {
           color: fg,
           letterSpacing: '-0.01em',
         }}>Alessandro Cordano</span>
-      </div>
+      </a>
       <div style={{
         display: 'flex',
         gap: 36,
@@ -300,10 +310,13 @@ function HiFiNav({ active = 'Home', onDark = false }) {
           <NavItem key={i} label={i} active={active === i} fg={fg} />
         ))}
       </div>
-      <button
+      <a
+        href="about.html"
         onMouseEnter={() => setBtnHovered(true)}
         onMouseLeave={() => setBtnHovered(false)}
         style={{
+          display: 'inline-block',
+          textDecoration: 'none',
           background: btnHovered ? AC.forest : AC.gold,
           color: btnHovered ? AC.gold : AC.ink,
           border: btnHovered ? `1px solid ${AC.gold}` : '1px solid transparent',
@@ -315,7 +328,7 @@ function HiFiNav({ active = 'Home', onDark = false }) {
           fontWeight: 600,
           cursor: 'pointer',
           transition: 'background 0.18s, color 0.18s, border-color 0.18s',
-        }}>Book a Call</button>
+        }}>Book a Call</a>
     </div>
   );
 }
@@ -370,19 +383,22 @@ function MarqueeStrip({ items, variant = 'forest', animated = false }) {
 }
 
 /* FooterLink — footer nav item with gold hover */
-function FooterLink({ children }) {
+function FooterLink({ children, href }) {
   const [hovered, setHovered] = React.useState(false);
+  const Tag = href ? 'a' : 'span';
   return (
-    <span
+    <Tag
+      href={href}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
       style={{
         color: hovered ? AC.gold : 'rgba(244,239,228,0.85)',
         transition: 'color 0.18s',
         cursor: 'pointer',
+        textDecoration: 'none',
       }}>
       {children}
-    </span>
+    </Tag>
   );
 }
 
@@ -412,14 +428,30 @@ function HiFiFooter() {
           </Body>
         </div>
         {[
-          ['Navigate', ['Portfolio', 'Track Record', 'Network', 'Case Studies', 'About']],
-          ['Contact', ['Geneva HQ', 'desk@ac-sourcing.com', '+41 22 000 0000', 'Calendar']],
-          ['Compliance', ['KYC / AML', 'EUDR Aligned', 'Marine Cargo Insured', 'Geneva Counsel']],
+          ['Navigate', [
+            { label: 'Portfolio', href: 'portfolio.html' },
+            { label: 'Track Record', href: 'track-record.html' },
+            { label: 'Network', href: 'network.html' },
+            { label: 'Case Studies', href: 'case-studies.html' },
+            { label: 'About', href: 'about.html' },
+          ]],
+          ['Contact', [
+            { label: 'Geneva HQ' },
+            { label: 'desk@ac-sourcing.com', href: 'mailto:desk@ac-sourcing.com' },
+            { label: '+41 22 000 0000', href: 'tel:+41220000000' },
+            { label: 'Calendar', href: 'about.html' },
+          ]],
+          ['Compliance', [
+            { label: 'KYC / AML' },
+            { label: 'EUDR Aligned' },
+            { label: 'Marine Cargo Insured' },
+            { label: 'Geneva Counsel' },
+          ]],
         ].map(([title, items]) => (
           <div key={title}>
             <Eyebrow color="rgba(244,239,228,0.5)" style={{ marginBottom: 16 }}>{title}</Eyebrow>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 10, fontSize: 13 }}>
-              {items.map((it) => <FooterLink key={it}>{it}</FooterLink>)}
+              {items.map((it) => <FooterLink key={it.label} href={it.href}>{it.label}</FooterLink>)}
             </div>
           </div>
         ))}

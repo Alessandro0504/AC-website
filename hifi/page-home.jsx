@@ -202,8 +202,12 @@ function HomeHiFi() {
             <Body size={16} color="rgba(244,239,228,0.78)" width={500}>{t.heroBody}</Body>
 
             <div style={{ display: 'flex', gap: 12, marginTop: 44 }}>
-              <GoldButton>{t.heroCta1} <span style={{ fontFamily: AC.serif, fontSize: 16 }}>→</span></GoldButton>
-              <GhostButton onDark>{t.heroCta2}</GhostButton>
+              <a href="about.html" style={{ textDecoration: 'none' }}>
+                <GoldButton>{t.heroCta1} <span style={{ fontFamily: AC.serif, fontSize: 16 }}>→</span></GoldButton>
+              </a>
+              <a href="portfolio.html" style={{ textDecoration: 'none' }}>
+                <GhostButton onDark>{t.heroCta2}</GhostButton>
+              </a>
             </div>
           </div>
 
@@ -303,7 +307,9 @@ function HomeHiFi() {
               <Stat value={t.netS2Value} suffix="+" label={t.netS2Label} />
             </div>
             <div style={{ marginTop: 36 }}>
-              <GhostButton>{t.netCta}</GhostButton>
+              <a href="network.html" style={{ textDecoration: 'none' }}>
+                <GhostButton>{t.netCta}</GhostButton>
+              </a>
             </div>
           </div>
 
@@ -348,7 +354,9 @@ function HomeHiFi() {
           </Display>
           <Body size={15} color="rgba(244,239,228,0.7)" width={520} style={{ margin: '36px auto 0' }}>{t.ctaBody}</Body>
           <div style={{ marginTop: 44, display: 'flex', gap: 12, justifyContent: 'center' }}>
-            <GoldButton>{t.ctaCta1}</GoldButton>
+            <a href="about.html" style={{ textDecoration: 'none' }}>
+              <GoldButton>{t.ctaCta1}</GoldButton>
+            </a>
             <GhostButton onDark>{t.ctaCta2}</GhostButton>
           </div>
         </div>
