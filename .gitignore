@@ -1,0 +1,13 @@
+# Zip archives — source files, not tracked
+*.zip
+
+# Temp extraction folders
+*-temp/
+
+# Claude Code settings (local only)
+.claude/
+
+# OS junk
+.DS_Store
+Thumbs.db
+desktop.ini
