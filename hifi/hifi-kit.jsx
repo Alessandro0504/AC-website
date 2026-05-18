@@ -238,6 +238,17 @@ function Tag({ children, variant = 'cream', style = {} }) {
   );
 }
 
+/* Breakpoint hook — re-renders on resize */
+function useBreakpoint() {
+  const [width, setWidth] = React.useState(window.innerWidth);
+  React.useEffect(() => {
+    const handler = () => setWidth(window.innerWidth);
+    window.addEventListener('resize', handler);
+    return () => window.removeEventListener('resize', handler);
+  }, []);
+  return { isMobile: width < 768, width };
+}
+
 /* NavItem — single nav link with hover underline */
 const NAV_HREFS = {
   'Portfolio': 'portfolio.html',
@@ -266,70 +277,143 @@ function NavItem({ label, active, fg }) {
   );
 }
 
-/* Nav bar — fixed at top of every page */
+/* Nav bar — sticky, collapses to hamburger on mobile */
 function HiFiNav({ active = 'Home', onDark = false }) {
   const items = ['Portfolio', 'Track Record', 'Network', 'Case Studies', 'About'];
   const fg = onDark ? AC.paper : AC.ink;
   const ruleColor = onDark ? 'rgba(244,239,228,0.18)' : AC.rule;
   const [btnHovered, setBtnHovered] = React.useState(false);
+  const [menuOpen, setMenuOpen] = React.useState(false);
+  const { isMobile } = useBreakpoint();
   return (
-    <div style={{
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'space-between',
-      padding: '22px 56px',
-      borderBottom: `1px solid ${ruleColor}`,
-      background: 'transparent',
-      position: 'relative',
-      zIndex: 10,
-    }}>
-      <a href="index.html" style={{ textDecoration: 'none', display: 'flex', alignItems: 'center', gap: 12 }}>
-        <img src="assets/ac-logo.png" alt="AC" style={{
-          width: 30, height: 30,
-          filter: onDark ? 'brightness(0) invert(1)' : 'none',
-        }} />
-        <span style={{
-          fontFamily: AC.serif,
-          fontSize: 19,
-          fontWeight: 500,
-          color: fg,
-          letterSpacing: '-0.01em',
-        }}>Alessandro Cordano</span>
-      </a>
+    <React.Fragment>
       <div style={{
         display: 'flex',
-        gap: 36,
-        fontFamily: AC.sans,
-        fontSize: 12,
-        color: fg,
-        letterSpacing: '0.1em',
-        textTransform: 'uppercase',
-        fontWeight: 500,
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        padding: isMobile ? '18px 24px' : '22px 56px',
+        borderBottom: `1px solid ${ruleColor}`,
+        background: onDark ? AC.forest : AC.paper,
+        position: 'sticky',
+        top: 0,
+        zIndex: 100,
       }}>
-        {items.map((i) => (
-          <NavItem key={i} label={i} active={active === i} fg={fg} />
-        ))}
+        <a href="index.html" style={{ textDecoration: 'none', display: 'flex', alignItems: 'center', gap: 12 }}>
+          <img src="assets/ac-logo.png" alt="AC" style={{
+            width: 28, height: 28,
+            filter: onDark ? 'brightness(0) invert(1)' : 'none',
+          }} />
+          <span style={{
+            fontFamily: AC.serif,
+            fontSize: isMobile ? 16 : 19,
+            fontWeight: 500,
+            color: fg,
+            letterSpacing: '-0.01em',
+          }}>Alessandro Cordano</span>
+        </a>
+        {!isMobile && (
+          <div style={{
+            display: 'flex',
+            gap: 36,
+            fontFamily: AC.sans,
+            fontSize: 12,
+            color: fg,
+            letterSpacing: '0.1em',
+            textTransform: 'uppercase',
+            fontWeight: 500,
+          }}>
+            {items.map((i) => (
+              <NavItem key={i} label={i} active={active === i} fg={fg} />
+            ))}
+          </div>
+        )}
+        {isMobile ? (
+          <button
+            onClick={() => setMenuOpen(!menuOpen)}
+            style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 4, display: 'flex', alignItems: 'center' }}
+          >
+            <svg width="22" height="16" viewBox="0 0 22 16" fill="none">
+              <rect width="22" height="2" fill={fg} />
+              <rect y="7" width="22" height="2" fill={fg} />
+              <rect y="14" width="22" height="2" fill={fg} />
+            </svg>
+          </button>
+        ) : (
+          <a
+            href="about.html"
+            onMouseEnter={() => setBtnHovered(true)}
+            onMouseLeave={() => setBtnHovered(false)}
+            style={{
+              display: 'inline-block',
+              textDecoration: 'none',
+              background: btnHovered ? AC.forest : AC.gold,
+              color: btnHovered ? AC.gold : AC.ink,
+              border: btnHovered ? `1px solid ${AC.gold}` : '1px solid transparent',
+              padding: '12px 18px',
+              fontFamily: AC.sans,
+              fontSize: 11,
+              letterSpacing: '0.14em',
+              textTransform: 'uppercase',
+              fontWeight: 600,
+              cursor: 'pointer',
+              transition: 'background 0.18s, color 0.18s, border-color 0.18s',
+            }}>Book a Call</a>
+        )}
       </div>
-      <a
-        href="about.html"
-        onMouseEnter={() => setBtnHovered(true)}
-        onMouseLeave={() => setBtnHovered(false)}
-        style={{
-          display: 'inline-block',
-          textDecoration: 'none',
-          background: btnHovered ? AC.forest : AC.gold,
-          color: btnHovered ? AC.gold : AC.ink,
-          border: btnHovered ? `1px solid ${AC.gold}` : '1px solid transparent',
-          padding: '12px 18px',
-          fontFamily: AC.sans,
-          fontSize: 11,
-          letterSpacing: '0.14em',
-          textTransform: 'uppercase',
-          fontWeight: 600,
-          cursor: 'pointer',
-          transition: 'background 0.18s, color 0.18s, border-color 0.18s',
-        }}>Book a Call</a>
-    </div>
+      {isMobile && menuOpen && (
+        <div style={{
+          position: 'fixed',
+          inset: 0,
+          background: AC.forest,
+          zIndex: 200,
+          display: 'flex',
+          flexDirection: 'column',
+          padding: '80px 32px 40px',
+        }}>
+          <button
+            onClick={() => setMenuOpen(false)}
+            style={{ position: 'absolute', top: 22, right: 24, background: 'none', border: 'none', cursor: 'pointer', padding: 4 }}
+          >
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+              <line x1="2" y1="2" x2="18" y2="18" stroke={AC.paper} strokeWidth="2" />
+              <line x1="18" y1="2" x2="2" y2="18" stroke={AC.paper} strokeWidth="2" />
+            </svg>
+          </button>
+          <div style={{ display: 'flex', flexDirection: 'column', flex: 1 }}>
+            {items.map((item) => (
+              <a
+                key={item}
+                href={NAV_HREFS[item] || '#'}
+                style={{
+                  textDecoration: 'none',
+                  fontFamily: AC.serif,
+                  fontSize: 38,
+                  fontWeight: 400,
+                  color: active === item ? AC.gold : AC.paper,
+                  letterSpacing: '-0.01em',
+                  padding: '14px 0',
+                  borderBottom: `1px solid ${AC.ruleDark}`,
+                  display: 'block',
+                }}
+              >{item}</a>
+            ))}
+          </div>
+          <a href="about.html" style={{ textDecoration: 'none', marginTop: 32 }}>
+            <div style={{
+              background: AC.gold,
+              color: AC.ink,
+              padding: '16px 24px',
+              fontFamily: AC.sans,
+              fontSize: 12,
+              letterSpacing: '0.14em',
+              textTransform: 'uppercase',
+              fontWeight: 600,
+              textAlign: 'center',
+            }}>Book a Call →</div>
+          </a>
+        </div>
+      )}
+    </React.Fragment>
   );
 }
 
@@ -404,18 +488,19 @@ function FooterLink({ children, href }) {
 
 /* Footer */
 function HiFiFooter() {
+  const { isMobile } = useBreakpoint();
   return (
     <footer style={{
       background: AC.forestDeep,
       color: AC.paper,
-      padding: '72px 56px 32px',
+      padding: isMobile ? '48px 24px 24px' : '72px 56px 32px',
       fontFamily: AC.sans,
     }}>
       <div style={{
         display: 'grid',
-        gridTemplateColumns: '1.4fr 1fr 1fr 1fr',
-        gap: 48,
-        paddingBottom: 56,
+        gridTemplateColumns: isMobile ? '1fr 1fr' : '1.4fr 1fr 1fr 1fr',
+        gap: isMobile ? 32 : 48,
+        paddingBottom: isMobile ? 32 : 56,
         borderBottom: `1px solid ${AC.ruleDark}`,
       }}>
         <div>
@@ -458,6 +543,8 @@ function HiFiFooter() {
       </div>
       <div style={{
         display: 'flex',
+        flexDirection: isMobile ? 'column' : 'row',
+        gap: isMobile ? 8 : 0,
         justifyContent: 'space-between',
         paddingTop: 24,
         fontFamily: AC.mono,
@@ -684,6 +771,6 @@ function NetworkMap() {
 
 Object.assign(window, {
   AC, Eyebrow, Display, I, Body, GoldButton, GhostButton, HiFiImage,
-  Tag, HiFiNav, MarqueeStrip, HiFiFooter,
+  Tag, HiFiNav, MarqueeStrip, HiFiFooter, useBreakpoint,
   Stat, StatTile, TextLink, Subhead, NetworkMap,
 });

@@ -41,6 +41,7 @@ const TRACK_TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
 
 function TrackRecordHiFi() {
   const [t, setTweak] = useTweaks(TRACK_TWEAK_DEFAULTS);
+  const { isMobile } = useBreakpoint();
   const tx = (k) => (v) => setTweak(k, v);
 
   const stripItems = [t.stripItem1, t.stripItem2, t.stripItem3, t.stripItem4, t.stripItem5].filter(Boolean);
@@ -105,17 +106,17 @@ function TrackRecordHiFi() {
       </TweakSection>
     </TweaksPanel>
 
-    <div style={{ width: 1280, background: AC.paper, color: AC.ink, fontFamily: AC.sans }}
+    <div style={{ width: '100%', background: AC.paper, color: AC.ink, fontFamily: AC.sans }}
          data-screen-label="Track Record — Hi-Fi">
 
       <HiFiNav active="Track Record" />
 
       {/* ============ HEADER ============ */}
-      <div style={{ padding: '72px 56px 48px' }}>
+      <div style={{ padding: isMobile ? '48px 24px 32px' : '72px 56px 48px' }}>
         <Tag variant="gold" style={{ marginBottom: 22 }}>{t.tag}</Tag>
-        <Display size={84}>{t.title1}</Display>
-        <Display size={84}><I>{t.title2Italic}</I></Display>
-        <div style={{ display: 'grid', gridTemplateColumns: '1.4fr 1fr', gap: 56, marginTop: 28, alignItems: 'end' }}>
+        <Display size={isMobile ? 44 : 84}>{t.title1}</Display>
+        <Display size={isMobile ? 44 : 84}><I>{t.title2Italic}</I></Display>
+        <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1.4fr 1fr', gap: 56, marginTop: 28, alignItems: 'end' }}>
           <Body size={15} width={560}>{t.bodyLeft}</Body>
           <div style={{ display: 'flex', alignItems: 'center', gap: 12, justifyContent: 'flex-end' }}>
             <div style={{ textAlign: 'right' }}>
@@ -128,11 +129,11 @@ function TrackRecordHiFi() {
         </div>
       </div>
 
-      <MarqueeStrip items={stripItems} variant="forest" />
+      <MarqueeStrip items={stripItems} variant="forest" animated />
 
       {/* ============ STAT TILES ============ */}
-      <div style={{ padding: '48px 56px 24px' }}>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 1, background: AC.rule, border: `1px solid ${AC.rule}` }}>
+      <div style={{ padding: isMobile ? '24px 24px 16px' : '48px 56px 24px' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: isMobile ? 'repeat(2, 1fr)' : 'repeat(4, 1fr)', gap: 1, background: AC.rule, border: `1px solid ${AC.rule}` }}>
           {stats.map((s, i) => (
             <StatTile key={i}
               value={s.value}
@@ -145,8 +146,8 @@ function TrackRecordHiFi() {
       </div>
 
       {/* ============ LEDGER OF ASSURANCE ============ */}
-      <div style={{ padding: '64px 56px 80px', background: AC.paperWarm, borderTop: `1px solid ${AC.rule}`, borderBottom: `1px solid ${AC.rule}` }}>
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1.2fr', gap: 56 }}>
+      <div style={{ padding: isMobile ? '48px 24px' : '64px 56px 80px', background: AC.paperWarm, borderTop: `1px solid ${AC.rule}`, borderBottom: `1px solid ${AC.rule}` }}>
+        <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1fr 1.2fr', gap: isMobile ? 32 : 56 }}>
 
           {/* Left — copy + feature list */}
           <div>
@@ -226,8 +227,8 @@ function TrackRecordHiFi() {
       </div>
 
       {/* ============ DARK CTA ============ */}
-      <div style={{ background: AC.forest, color: AC.paper, padding: '80px 56px', textAlign: 'center' }}>
-        <Display size={40} color={AC.paper} style={{ maxWidth: 720, margin: '0 auto', lineHeight: 1.15 }}>
+      <div style={{ background: AC.forest, color: AC.paper, padding: isMobile ? '56px 24px' : '80px 56px', textAlign: 'center' }}>
+        <Display size={isMobile ? 26 : 40} color={AC.paper} style={{ maxWidth: 720, margin: '0 auto', lineHeight: 1.15 }}>
           {t.ctaPre} <I color={AC.goldLight}>{t.ctaItalic}</I> {t.ctaPost}
         </Display>
         <div style={{ marginTop: 36, display: 'flex', gap: 12, justifyContent: 'center' }}>

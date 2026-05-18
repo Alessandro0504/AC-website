@@ -1,6 +1,7 @@
 /* Hi-Fi Network page */
 
 function NetworkHiFi() {
+  const { isMobile } = useBreakpoint();
   const origins = [
     { country: 'Peru',  hub: 'Strategic Hub · Lima',         tone: 'bronze', desc: 'Direct partnerships with high-altitude cooperatives. Specializing in specialized grains and superfoods with full traceability.', tags: ['Certified Organic', 'Export Tier 1'] },
     { country: 'Chile', hub: 'Strategic Hub · Valparaíso',   tone: 'dark',   desc: 'Utilizing off-season harvest cycles to ensure year-round availability for northern hemisphere markets.', tags: ['Climate Controlled', 'Cold-Chain Logistics'] },
@@ -13,21 +14,19 @@ function NetworkHiFi() {
   ];
 
   return (
-    <div style={{ width: 1280, background: AC.paper, color: AC.ink, fontFamily: AC.sans }} data-screen-label="Network — Hi-Fi">
-      <div style={{ background: AC.forest }}>
-        <HiFiNav active="Network" onDark />
-      </div>
+    <div style={{ width: '100%', background: AC.paper, color: AC.ink, fontFamily: AC.sans }} data-screen-label="Network — Hi-Fi">
+      <HiFiNav active="Network" onDark />
 
-      <MarqueeStrip items={['Agri-Index +1.24% Stable', 'LATAM-Origin Stable', 'APAC-Demand Rising', 'EU-Compliance Updated', 'MENA-Logistics Optimized']} variant="forest" />
+      <MarqueeStrip items={['Agri-Index +1.24% Stable', 'LATAM-Origin Stable', 'APAC-Demand Rising', 'EU-Compliance Updated', 'MENA-Logistics Optimized']} variant="forest" animated />
 
       {/* Hero */}
-      <div style={{ padding: '80px 56px 32px' }}>
+      <div style={{ padding: isMobile ? '48px 24px 24px' : '80px 56px 32px' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 28 }}>
           <Tag variant="outline">§ IV · The Network</Tag>
           <Eyebrow>The Agrarian Ledger / Page 04</Eyebrow>
         </div>
-        <Display size={92}>Global <I color={AC.gold}>Network.</I></Display>
-        <div style={{ display: 'grid', gridTemplateColumns: '1.4fr 1fr', gap: 64, marginTop: 36, alignItems: 'end' }}>
+        <Display size={isMobile ? 52 : 92}>Global <I color={AC.gold}>Network.</I></Display>
+        <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1.4fr 1fr', gap: 64, marginTop: 36, alignItems: 'end' }}>
           <Body size={16} width={620}>
             A cross-continental infrastructure connecting premier agricultural supply origins with high-yield
             buyer markets through verified procurement channels. Every node on this map has been audited,
@@ -46,8 +45,8 @@ function NetworkHiFi() {
       </div>
 
       {/* Hero map */}
-      <div style={{ padding: '32px 56px 56px' }}>
-        <div style={{ position: 'relative', height: 360, background: AC.forest, border: `1px solid ${AC.forestLine}` }}>
+      <div style={{ padding: isMobile ? '16px 24px 32px' : '32px 56px 56px' }}>
+        <div style={{ position: 'relative', height: isMobile ? 220 : 360, background: AC.forest, border: `1px solid ${AC.forestLine}` }}>
           <NetworkMap />
           <div style={{ position: 'absolute', inset: 0, pointerEvents: 'none' }}>
             {/* legend overlay re-styled for dark */}
@@ -56,8 +55,8 @@ function NetworkHiFi() {
       </div>
 
       {/* Origins / Markets two-column */}
-      <div style={{ padding: '0 56px 64px' }}>
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 96px 1fr', gap: 24, alignItems: 'flex-start' }}>
+      <div style={{ padding: isMobile ? '0 24px 48px' : '0 56px 64px' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1fr 96px 1fr', gap: 24, alignItems: 'flex-start' }}>
           {/* ORIGINS */}
           <div>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: 24, paddingBottom: 14, borderBottom: `1px solid ${AC.ink}` }}>
@@ -91,7 +90,7 @@ function NetworkHiFi() {
           </div>
 
           {/* CONNECTOR */}
-          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', paddingTop: 80 }}>
+          {!isMobile && <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', paddingTop: 80 }}>
             <div style={{ width: 1, flex: 1, background: AC.rule, minHeight: 60 }} />
             <div style={{ width: 44, height: 44, border: `1px solid ${AC.ink}`, borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', background: AC.paper, fontFamily: AC.serif, fontSize: 20 }}>⇄</div>
             <div style={{ width: 1, flex: 1, background: AC.rule, minHeight: 60 }} />
@@ -99,7 +98,7 @@ function NetworkHiFi() {
             <div style={{ width: 1, flex: 1, background: AC.rule, minHeight: 60 }} />
             <div style={{ width: 44, height: 44, border: `1px solid ${AC.ink}`, borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', background: AC.paper, fontFamily: AC.serif, fontSize: 20 }}>⇄</div>
             <div style={{ width: 1, flex: 1, background: AC.rule, minHeight: 60 }} />
-          </div>
+          </div>}
 
           {/* MARKETS */}
           <div>
@@ -136,11 +135,11 @@ function NetworkHiFi() {
       </div>
 
       {/* Strategic reach */}
-      <div style={{ padding: '0 56px 80px' }}>
-        <div style={{ background: AC.gold, color: AC.ink, padding: '48px 40px', display: 'grid', gridTemplateColumns: '1.1fr 1fr', gap: 56, alignItems: 'center' }}>
+      <div style={{ padding: isMobile ? '0 24px 56px' : '0 56px 80px' }}>
+        <div style={{ background: AC.gold, color: AC.ink, padding: isMobile ? '32px 24px' : '48px 40px', display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1.1fr 1fr', gap: isMobile ? 28 : 56, alignItems: 'center' }}>
           <div>
             <Eyebrow color="rgba(15,20,16,0.6)" style={{ marginBottom: 14 }}>§ V · Strategic Reach</Eyebrow>
-            <Display size={44}>An <I>ecosystem,</I> not a list.</Display>
+            <Display size={isMobile ? 32 : 44}>An <I>ecosystem,</I> not a list.</Display>
             <Body size={14} color="rgba(15,20,16,0.78)" style={{ marginTop: 18 }}>
               Our network is more than a list of countries; it's a living ecosystem of trusted brokers,
               logistics experts and financial institutions operating in unison.

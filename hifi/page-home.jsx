@@ -79,6 +79,7 @@ const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
 
 function HomeHiFi() {
   const [t, setTweak] = useTweaks(TWEAK_DEFAULTS);
+  const { isMobile } = useBreakpoint();
   const tx = (k) => (v) => setTweak(k, v);
 
   const stripItems = [t.stripItem1, t.stripItem2, t.stripItem3, t.stripItem4, t.stripItem5].filter(Boolean);
@@ -176,28 +177,29 @@ function HomeHiFi() {
     </TweaksPanel>
 
     <div style={{
-      width: 1280,
+      width: '100%',
       background: AC.paper,
       color: AC.ink,
       fontFamily: AC.sans,
     }} data-screen-label="Home — Hi-Fi">
 
+      <HiFiNav active="Home" onDark />
+
       {/* ============ HERO ============ */}
       <div style={{ background: AC.forest, color: AC.paper, position: 'relative', overflow: 'hidden' }}>
-        <HiFiNav active="Home" onDark />
 
-        <div style={{ padding: '72px 56px 80px', display: 'grid', gridTemplateColumns: '1.05fr 1fr', gap: 64, alignItems: 'center' }}>
+        <div style={{ padding: isMobile ? '48px 24px 56px' : '72px 56px 80px', display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1.05fr 1fr', gap: 64, alignItems: 'center' }}>
           <div>
             <div style={{ display: 'inline-flex', alignItems: 'center', gap: 10, marginBottom: 32 }}>
               <Tag variant="gold">{t.heroTag}</Tag>
               <Eyebrow color="rgba(244,239,228,0.55)" style={{ fontSize: 10 }}>{t.heroEyebrow}</Eyebrow>
             </div>
 
-            <Display size={96} color={AC.paper} style={{ marginBottom: 4 }}>{t.heroLine1}</Display>
-            <Display size={96} color={AC.paper} style={{ marginBottom: 4 }}>
+            <Display size={isMobile ? 52 : 96} color={AC.paper} style={{ marginBottom: 4 }}>{t.heroLine1}</Display>
+            <Display size={isMobile ? 52 : 96} color={AC.paper} style={{ marginBottom: 4 }}>
               <I color={AC.goldLight}>{t.heroLine2Italic}</I>
             </Display>
-            <Display size={96} color={AC.paper} style={{ marginBottom: 38 }}>{t.heroLine3}</Display>
+            <Display size={isMobile ? 52 : 96} color={AC.paper} style={{ marginBottom: 38 }}>{t.heroLine3}</Display>
 
             <Body size={16} color="rgba(244,239,228,0.78)" width={500}>{t.heroBody}</Body>
 
@@ -211,7 +213,7 @@ function HomeHiFi() {
             </div>
           </div>
 
-          <div>
+          {!isMobile && <div>
             <div style={{ position: 'relative' }}>
               <HiFiImage subject="coffee · andean highlands" tone="bronze" ratio="4/5" />
               {/* floating caption card */}
@@ -234,23 +236,23 @@ function HomeHiFi() {
               <span>{t.heroPlateLabel}</span>
               <span>{t.heroPlateNote}</span>
             </div>
-          </div>
+          </div>}
         </div>
       </div>
 
       <MarqueeStrip items={stripItems} variant="gold" animated />
 
       {/* ============ PROOF POINTS ============ */}
-      <div style={{ padding: '96px 56px 48px', background: AC.paper }}>
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: 48 }}>
+      <div style={{ padding: isMobile ? '48px 24px 32px' : '96px 56px 48px', background: AC.paper }}>
+        <div style={{ display: 'flex', flexDirection: isMobile ? 'column' : 'row', justifyContent: 'space-between', alignItems: isMobile ? 'flex-start' : 'flex-end', gap: isMobile ? 16 : 0, marginBottom: 48 }}>
           <div>
             <Eyebrow style={{ marginBottom: 18 }}>§ I · Performance, Audited</Eyebrow>
-            <Display size={56}>{t.proofTitle1} <I>{t.proofTitle2Italic}</I></Display>
+            <Display size={isMobile ? 36 : 56}>{t.proofTitle1} <I>{t.proofTitle2Italic}</I></Display>
           </div>
           <Body width={320} style={{ marginBottom: 8 }}>{t.proofAside}</Body>
         </div>
 
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 1, background: AC.rule, border: `1px solid ${AC.rule}` }}>
+        <div style={{ display: 'grid', gridTemplateColumns: isMobile ? 'repeat(2, 1fr)' : 'repeat(4, 1fr)', gap: 1, background: AC.rule, border: `1px solid ${AC.rule}` }}>
           {proofStats.map((s, i) => (
             <StatTile key={i}
               value={s.value}
@@ -262,16 +264,16 @@ function HomeHiFi() {
       </div>
 
       {/* ============ THE PORTFOLIO — EXCERPT ============ */}
-      <div style={{ padding: '64px 56px 96px', background: AC.paper }}>
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: 40 }}>
+      <div style={{ padding: isMobile ? '40px 24px 56px' : '64px 56px 96px', background: AC.paper }}>
+        <div style={{ display: 'flex', flexDirection: isMobile ? 'column' : 'row', justifyContent: 'space-between', alignItems: isMobile ? 'flex-start' : 'flex-end', gap: isMobile ? 16 : 0, marginBottom: 40 }}>
           <div>
             <Eyebrow style={{ marginBottom: 18 }}>§ II · The Portfolio · Excerpt</Eyebrow>
-            <Display size={56}>{t.portTitle1} <I>{t.portTitle2Italic}</I></Display>
+            <Display size={isMobile ? 36 : 56}>{t.portTitle1} <I>{t.portTitle2Italic}</I></Display>
           </div>
           <TextLink>{t.portLink}</TextLink>
         </div>
 
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 24 }}>
+        <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : 'repeat(3, 1fr)', gap: 24 }}>
           {portfolio.map((p) => (
             <div key={p.code} style={{ cursor: 'pointer' }}>
               <div style={{ position: 'relative' }}>
@@ -294,11 +296,11 @@ function HomeHiFi() {
       </div>
 
       {/* ============ NETWORK PREVIEW ============ */}
-      <div style={{ padding: '96px 56px', background: AC.paperWarm, borderTop: `1px solid ${AC.rule}`, borderBottom: `1px solid ${AC.rule}` }}>
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1.4fr', gap: 64, alignItems: 'center' }}>
+      <div style={{ padding: isMobile ? '56px 24px' : '96px 56px', background: AC.paperWarm, borderTop: `1px solid ${AC.rule}`, borderBottom: `1px solid ${AC.rule}` }}>
+        <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1fr 1.4fr', gap: 64, alignItems: 'center' }}>
           <div>
             <Eyebrow style={{ marginBottom: 18 }}>§ III · The Network</Eyebrow>
-            <Display size={64} style={{ marginBottom: 24 }}>
+            <Display size={isMobile ? 38 : 64} style={{ marginBottom: 24 }}>
               {t.netTitlePre} <I>{t.netTitleItalic1}</I> {t.netTitleMid} <I>{t.netTitleItalic2}</I>
             </Display>
             <Body size={15} width={420}>{t.netBody}</Body>
@@ -313,18 +315,17 @@ function HomeHiFi() {
             </div>
           </div>
 
-          {/* Stylized world map */}
-          <div style={{ position: 'relative', height: 420 }}>
+          {!isMobile && <div style={{ position: 'relative', height: 420 }}>
             <NetworkMap />
-          </div>
+          </div>}
         </div>
       </div>
 
       {/* ============ MANIFESTO / NOTE ============ */}
-      <div style={{ padding: '96px 56px', background: AC.paper, display: 'grid', gridTemplateColumns: '160px 1fr 200px', gap: 56 }}>
+      <div style={{ padding: isMobile ? '56px 24px' : '96px 56px', background: AC.paper, display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '160px 1fr 200px', gap: isMobile ? 24 : 56 }}>
         <Eyebrow>§ IV · A note</Eyebrow>
         <div>
-          <p style={{ fontFamily: AC.serif, fontSize: 36, lineHeight: 1.35, fontWeight: 400, margin: 0, color: AC.ink, letterSpacing: '-0.01em' }}>
+          <p style={{ fontFamily: AC.serif, fontSize: isMobile ? 22 : 36, lineHeight: 1.35, fontWeight: 400, margin: 0, color: AC.ink, letterSpacing: '-0.01em' }}>
             "{t.manifestoQ1}<I color={AC.gold}>{t.manifestoItalic}</I>{t.manifestoQ2}"
           </p>
           <div style={{ marginTop: 36, display: 'flex', alignItems: 'center', gap: 16 }}>
@@ -339,17 +340,17 @@ function HomeHiFi() {
       </div>
 
       {/* ============ CTA — DARK ============ */}
-      <div style={{ background: AC.forest, color: AC.paper, padding: '112px 56px', position: 'relative', overflow: 'hidden' }}>
+      <div style={{ background: AC.forest, color: AC.paper, padding: isMobile ? '64px 24px' : '112px 56px', position: 'relative', overflow: 'hidden' }}>
         <div style={{
           position: 'absolute', inset: 0, opacity: 0.08,
           backgroundImage: `url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>")`,
         }} />
         <div style={{ position: 'relative', textAlign: 'center', maxWidth: 880, margin: '0 auto' }}>
           <Eyebrow color="rgba(244,239,228,0.5)" style={{ marginBottom: 24 }}>◆ Begin a relationship ◆</Eyebrow>
-          <Display size={64} color={AC.paper}>
+          <Display size={isMobile ? 36 : 64} color={AC.paper}>
             {t.ctaTitle1Pre} <I color={AC.goldLight}>{t.ctaTitle1Italic}</I> {t.ctaTitle1Post}
           </Display>
-          <Display size={64} color={AC.paper} style={{ marginTop: 8 }}>
+          <Display size={isMobile ? 36 : 64} color={AC.paper} style={{ marginTop: 8 }}>
             {t.ctaTitle2}
           </Display>
           <Body size={15} color="rgba(244,239,228,0.7)" width={520} style={{ margin: '36px auto 0' }}>{t.ctaBody}</Body>

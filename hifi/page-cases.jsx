@@ -1,6 +1,7 @@
 /* Hi-Fi Case Studies page */
 
 function CaseStudiesHiFi() {
+  const { isMobile } = useBreakpoint();
   const cases = [
     {
       id: '#024', year: 'Q4 2025',
@@ -41,35 +42,33 @@ function CaseStudiesHiFi() {
   ];
 
   return (
-    <div style={{ width: 1280, background: AC.paper, color: AC.ink, fontFamily: AC.sans }} data-screen-label="Case Studies — Hi-Fi">
-      <div style={{ background: AC.forest }}>
-        <HiFiNav active="Case Studies" onDark />
-      </div>
+    <div style={{ width: '100%', background: AC.paper, color: AC.ink, fontFamily: AC.sans }} data-screen-label="Case Studies — Hi-Fi">
+      <HiFiNav active="Case Studies" onDark />
 
-      <div style={{ padding: '80px 56px 48px' }}>
+      <div style={{ padding: isMobile ? '48px 24px 32px' : '80px 56px 48px' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 28 }}>
           <Tag variant="outline">§ V · Selected Casework</Tag>
-          <Eyebrow>By Permission · Counterparty Names Redacted</Eyebrow>
+          {!isMobile && <Eyebrow>By Permission · Counterparty Names Redacted</Eyebrow>}
         </div>
-        <Display size={92} style={{ marginBottom: 6 }}>Trades,</Display>
-        <Display size={92}>on the <I color={AC.gold}>record.</I></Display>
+        <Display size={isMobile ? 52 : 92} style={{ marginBottom: 6 }}>Trades,</Display>
+        <Display size={isMobile ? 52 : 92}>on the <I color={AC.gold}>record.</I></Display>
         <Body size={16} width={620} style={{ marginTop: 32 }}>
           A redacted sample of recent transactions. Counterparty names are shared in private dossiers
           after a counterparty review. Every case below has been independently audited.
         </Body>
       </div>
 
-      <MarqueeStrip items={['Confidentiality Honored', 'Audit Trail Preserved', 'Counterparty Details Redacted', 'Available on Request']} variant="forest" />
+      <MarqueeStrip items={['Confidentiality Honored', 'Audit Trail Preserved', 'Counterparty Details Redacted', 'Available on Request']} variant="forest" animated />
 
       {/* Case list */}
-      <div style={{ padding: '24px 56px 64px' }}>
+      <div style={{ padding: isMobile ? '16px 24px 48px' : '24px 56px 64px' }}>
         {cases.map((c, i) => (
           <div key={c.id} style={{
-            padding: '48px 0',
+            padding: isMobile ? '32px 0' : '48px 0',
             borderTop: i === 0 ? `1px solid ${AC.ink}` : `1px solid ${AC.rule}`,
             display: 'grid',
-            gridTemplateColumns: '320px 1fr 260px',
-            gap: 40,
+            gridTemplateColumns: isMobile ? '1fr' : '320px 1fr 260px',
+            gap: isMobile ? 20 : 40,
             alignItems: 'flex-start',
           }}>
             <HiFiImage subject={c.title.toLowerCase()} tone={c.tone} ratio="4/3" />
@@ -107,8 +106,8 @@ function CaseStudiesHiFi() {
       </div>
 
       {/* CTA */}
-      <div style={{ background: AC.forest, color: AC.paper, padding: '96px 56px', textAlign: 'center' }}>
-        <Display size={56} color={AC.paper}>
+      <div style={{ background: AC.forest, color: AC.paper, padding: isMobile ? '56px 24px' : '96px 56px', textAlign: 'center' }}>
+        <Display size={isMobile ? 32 : 56} color={AC.paper}>
           Discuss a <I color={AC.goldLight}>similar trade</I> structure.
         </Display>
         <div style={{ marginTop: 36, display: 'flex', gap: 12, justifyContent: 'center' }}>

@@ -45,6 +45,7 @@ const PORTFOLIO_TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
 
 function PortfolioHiFi() {
   const [t, setTweak] = useTweaks(PORTFOLIO_TWEAK_DEFAULTS);
+  const { isMobile } = useBreakpoint();
   const tx = (k) => (v) => setTweak(k, v);
 
   const stripItems = [t.stripItem1, t.stripItem2, t.stripItem3, t.stripItem4, t.stripItem5].filter(Boolean);
@@ -131,18 +132,18 @@ function PortfolioHiFi() {
       </TweakSection>
     </TweaksPanel>
 
-    <div style={{ width: 1280, background: AC.paper, color: AC.ink, fontFamily: AC.sans }}
+    <div style={{ width: '100%', background: AC.paper, color: AC.ink, fontFamily: AC.sans }}
          data-screen-label="Portfolio — Hi-Fi">
 
       <HiFiNav active="Portfolio" />
-      <MarqueeStrip items={stripItems} variant="forest" />
+      <MarqueeStrip items={stripItems} variant="forest" animated />
 
       {/* ============ HEADER ============ */}
-      <div style={{ padding: '72px 56px 48px' }}>
+      <div style={{ padding: isMobile ? '48px 24px 32px' : '72px 56px 48px' }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end' }}>
           <div>
             <Eyebrow style={{ marginBottom: 18 }}>{t.eyebrow}</Eyebrow>
-            <Display size={84}>{t.titleMain} <I>{t.titleItalic}</I></Display>
+            <Display size={isMobile ? 44 : 84}>{t.titleMain} <I>{t.titleItalic}</I></Display>
           </div>
           <div style={{ fontFamily: AC.mono, fontSize: 9, letterSpacing: '0.2em', color: AC.muted, paddingBottom: 8 }}>
             CAT. MMXXVI · № 02
@@ -152,7 +153,7 @@ function PortfolioHiFi() {
       </div>
 
       {/* ============ CATEGORY GRID ============ */}
-      <div style={{ padding: '8px 56px 64px', display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 40 }}>
+      <div style={{ padding: isMobile ? '8px 24px 48px' : '8px 56px 64px', display: 'grid', gridTemplateColumns: isMobile ? '1fr' : 'repeat(3, 1fr)', gap: isMobile ? 32 : 40 }}>
         {categories.map((cat) => (
           <div key={cat.code}>
             {/* Category header */}
@@ -200,7 +201,7 @@ function PortfolioHiFi() {
       </div>
 
       {/* ============ SIDE PANELS ============ */}
-      <div style={{ padding: '0 56px 72px', display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 20 }}>
+      <div style={{ padding: isMobile ? '0 24px 48px' : '0 56px 72px', display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr 1fr', gap: 20 }}>
         {/* Additional inventory */}
         <div style={{ background: AC.cream, padding: '24px 20px', border: `1px solid ${AC.rule}` }}>
           <Eyebrow style={{ marginBottom: 14 }}>{t.panel1Title}</Eyebrow>
@@ -234,14 +235,15 @@ function PortfolioHiFi() {
       <div style={{
         background: AC.forest,
         color: AC.paper,
-        padding: '64px 56px',
+        padding: isMobile ? '48px 24px' : '64px 56px',
         display: 'flex',
+        flexDirection: isMobile ? 'column' : 'row',
         justifyContent: 'space-between',
-        alignItems: 'center',
-        gap: 64,
+        alignItems: isMobile ? 'flex-start' : 'center',
+        gap: isMobile ? 32 : 64,
       }}>
         <div>
-          <Display size={48} color={AC.paper}>
+          <Display size={isMobile ? 32 : 48} color={AC.paper}>
             {t.inquiryTitle} <I color={AC.goldLight}>{t.inquiryTitleItalic}</I>
           </Display>
           <Body size={14} color="rgba(244,239,228,0.7)" width={520} style={{ marginTop: 20 }}>

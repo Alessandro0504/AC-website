@@ -1,20 +1,19 @@
 /* Hi-Fi About & Contact page */
 
 function AboutContactHiFi() {
+  const { isMobile } = useBreakpoint();
   return (
-    <div style={{ width: 1280, background: AC.paper, color: AC.ink, fontFamily: AC.sans }} data-screen-label="About & Contact — Hi-Fi">
-      <div style={{ background: AC.forest }}>
-        <HiFiNav active="About" onDark />
-      </div>
+    <div style={{ width: '100%', background: AC.paper, color: AC.ink, fontFamily: AC.sans }} data-screen-label="About & Contact — Hi-Fi">
+      <HiFiNav active="About" onDark />
 
       {/* About hero */}
-      <div style={{ padding: '80px 56px', background: AC.paper }}>
+      <div style={{ padding: isMobile ? '48px 24px' : '80px 56px', background: AC.paper }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 36 }}>
           <Tag variant="outline">§ VI · The Principal</Tag>
-          <Eyebrow>The Agrarian Ledger / Page 06</Eyebrow>
+          {!isMobile && <Eyebrow>The Agrarian Ledger / Page 06</Eyebrow>}
         </div>
 
-        <div style={{ display: 'grid', gridTemplateColumns: '0.9fr 1.3fr', gap: 64, alignItems: 'flex-start' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '0.9fr 1.3fr', gap: isMobile ? 32 : 64, alignItems: 'flex-start' }}>
           <div style={{ position: 'relative' }}>
             <HiFiImage subject="alessandro cordano" tone="warm" ratio="3/4" />
             <div style={{
@@ -25,8 +24,8 @@ function AboutContactHiFi() {
             }}>◆ Geneva · 2026</div>
           </div>
           <div>
-            <Display size={80} style={{ marginBottom: 6 }}>Alessandro</Display>
-            <Display size={80}><I color={AC.gold}>Cordano.</I></Display>
+            <Display size={isMobile ? 48 : 80} style={{ marginBottom: 6 }}>Alessandro</Display>
+            <Display size={isMobile ? 48 : 80}><I color={AC.gold}>Cordano.</I></Display>
             <Eyebrow style={{ marginTop: 18 }}>Founder · Principal · Sourcing Manager</Eyebrow>
 
             <Body size={16} width={540} style={{ marginTop: 32 }}>
@@ -51,14 +50,14 @@ function AboutContactHiFi() {
         </div>
       </div>
 
-      <MarqueeStrip items={['Compliance · KYC / AML', 'Insurance · Marine Cargo', 'Banking · Tier-1 Swiss', 'Counsel · Geneva', 'Audit · PwC Annual']} variant="forest" />
+      <MarqueeStrip items={['Compliance · KYC / AML', 'Insurance · Marine Cargo', 'Banking · Tier-1 Swiss', 'Counsel · Geneva', 'Audit · PwC Annual']} variant="forest" animated />
 
       {/* Principles */}
-      <div style={{ padding: '96px 56px', background: AC.paperWarm, borderTop: `1px solid ${AC.rule}`, borderBottom: `1px solid ${AC.rule}` }}>
-        <div style={{ display: 'grid', gridTemplateColumns: '320px 1fr', gap: 64 }}>
+      <div style={{ padding: isMobile ? '56px 24px' : '96px 56px', background: AC.paperWarm, borderTop: `1px solid ${AC.rule}`, borderBottom: `1px solid ${AC.rule}` }}>
+        <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '320px 1fr', gap: isMobile ? 32 : 64 }}>
           <div>
             <Eyebrow style={{ marginBottom: 18 }}>How we work</Eyebrow>
-            <Display size={52}>Four <I color={AC.gold}>principles.</I></Display>
+            <Display size={isMobile ? 34 : 52}>Four <I color={AC.gold}>principles.</I></Display>
             <Body size={14} color={AC.muted} style={{ marginTop: 24 }}>
               Kept absolutely. They are the conditions under which we agree to broker anything.
             </Body>
@@ -87,8 +86,8 @@ function AboutContactHiFi() {
       </div>
 
       {/* Contact / Book a call */}
-      <div style={{ padding: '96px 56px', background: AC.paper }}>
-        <div style={{ background: AC.forest, color: AC.paper, padding: 56, display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 64, position: 'relative', overflow: 'hidden' }}>
+      <div style={{ padding: isMobile ? '48px 24px' : '96px 56px', background: AC.paper }}>
+        <div style={{ background: AC.forest, color: AC.paper, padding: isMobile ? 24 : 56, display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr', gap: isMobile ? 32 : 64, position: 'relative', overflow: 'hidden' }}>
           {/* texture */}
           <div style={{
             position: 'absolute', inset: 0, opacity: 0.05,
@@ -96,8 +95,8 @@ function AboutContactHiFi() {
           }} />
           <div style={{ position: 'relative' }}>
             <Eyebrow color="rgba(244,239,228,0.55)" style={{ marginBottom: 18 }}>Begin a Relationship</Eyebrow>
-            <Display size={56} color={AC.paper}>Book a <I color={AC.goldLight}>private</I></Display>
-            <Display size={56} color={AC.paper} style={{ marginTop: 4 }}>call.</Display>
+            <Display size={isMobile ? 36 : 56} color={AC.paper}>Book a <I color={AC.goldLight}>private</I></Display>
+            <Display size={isMobile ? 36 : 56} color={AC.paper} style={{ marginTop: 4 }}>call.</Display>
             <Body size={15} color="rgba(244,239,228,0.7)" width={400} style={{ marginTop: 28 }}>
               A 30-minute conversation to scope your sourcing requirements, jurisdictions and timing.
               No fee. No obligation. Calendar opens upon initial review.
